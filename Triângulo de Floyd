@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+int main()
+{
+    int i, j, z = 1;
+    int maximo = 5;
+    for ( i = 0 ; i <= maximo ; i++ ){
+        for( j = 0 ; j <= i ; j++ ){
+            printf("%d " , z );
+            z++;
+        }
+        printf("\n");
+    }
+}
