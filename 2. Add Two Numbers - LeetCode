@@ -1,0 +1,85 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    int soma, sobra = 0;
+    struct ListNode *head, *tail, *i, *j;
+    head = ( struct ListNode * ) malloc ( sizeof( struct ListNode ) );
+    head->next = NULL;
+    tail = head;
+    i = l1;
+    j = l2;
+    
+    while((j->next == NULL || i->next == NULL) == false){
+        j = j->next;
+        i = i->next;
+    }
+    if(j->next == NULL){
+        i = l1;
+        j = l2;
+    }else{
+        j = l1;
+        i = l2;
+    }
+
+    soma = j->val;
+    do{
+        tail->next = ( struct ListNode * ) malloc ( sizeof ( struct ListNode ) );
+        tail = tail->next;
+        tail->next = NULL;
+
+        soma += i->val + sobra;
+        if ( soma > 9 ){
+            soma -= 10;
+            sobra = 1;
+        }else{
+            sobra = 0;
+        }
+        tail->val = soma;
+        if (j->next != NULL){
+            j = j->next;
+            soma = j->val;
+        }else{
+            soma = 0;
+        }
+    i = i->next;
+
+    }while( i != NULL );
+
+    
+    if(sobra > 0){
+        tail->next = ( struct ListNode * ) malloc ( sizeof ( struct ListNode ) );
+        tail = tail->next;
+        tail->next = NULL;
+        if (i != NULL){
+        tail->val = sobra + i->val + soma;
+        }else{
+            tail->val = sobra + soma;
+        }
+        sobra = 0;        
+    }
+    if(sobra > 0){
+        tail->next = ( struct ListNode * ) malloc ( sizeof ( struct ListNode ) );
+        tail = tail->next;
+        tail->next = NULL;
+        tail->val = sobra + i->val + soma;
+        sobra = 0;        
+    }
+    if(tail->val > 9){
+        tail->val -= 10;
+        tail->next = ( struct ListNode * ) malloc ( sizeof ( struct ListNode ) );
+        tail = tail->next;
+        tail->next = NULL;
+        tail->val = 1;
+    }
+    tail = head;
+    head = head->next;
+    free(tail);
+
+    return head;
+    
+}
